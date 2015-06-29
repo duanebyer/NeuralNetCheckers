@@ -76,6 +76,11 @@ public class EloRatingSystem<Player>
         return this.ratings.get(ratingIndex);
     }
     
+    public Player getBestMatch(Player player)
+    {
+        return null;
+    }
+    
     public void updatePlayer(Player player, Double newScore)
     {
         
@@ -83,7 +88,12 @@ public class EloRatingSystem<Player>
     
     public double getAverageRating()
     {
-        return null
+        double sum = 0;
+        for (double rating : this.ratings)
+        {
+            sum += rating;
+        }
+        
     }
     
     public void addPlayer(Player player)
