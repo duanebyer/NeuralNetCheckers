@@ -56,17 +56,17 @@ public class EvolutionSystem {
         int numCulled = (int) cullRate * nets.size();
         int numChildren = numCulled / (nets.size() - numCulled);
         for (int i = 0; i < numCulled; ++i) {
-            this.ratingSystem.removePlayer(nets.get(nets.size() - i - 1));
+            this.ratingSystem.removePlayer(nets.get(i));
         }
         if (numChildren == 0) {
             for (int i = 0; i < numCulled; ++i) {
-                NeuralNet nextNet = nets.get(i).copy();
+                NeuralNet nextNet = nets.get(nets.size() - i - 1).copy();
                 nextNet.mutate(this.weightMutationRate, this.biasMutationRate);
                 this.ratingSystem.addPlayer(nextNet);
             }
         }
         else {
-            for (int i = 0; i < nets.size() - numCulled; ++i) {
+            for (int i = numCulled; i < nets.size(); ++i) {
                 NeuralNet nextNet = nets.get(i).copy();
                 nextNet.mutate(this.weightMutationRate, this.biasMutationRate);
                 this.ratingSystem.addPlayer(nextNet, this.ratingSystem.getRating(nets.get(i)));
@@ -76,7 +76,7 @@ public class EvolutionSystem {
     }
     
     public List<NeuralNet> getIndividuals() {
-        return this.ratingSystem.getBestToWorst();
+        return this.ratingSystem.getWorstToBest();
     }
     
     private final Random random = new Random();

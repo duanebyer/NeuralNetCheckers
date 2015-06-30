@@ -108,7 +108,7 @@ public class EloRatingSystem<Player>
         return bestMatch;
     }
     
-    public void updatePlayer(Player player, Double newScore)
+    public void updatePlayer(Player player, double newScore)
     {
         this.removePlayer(player);
         this.addPlayer(player, newScore);
@@ -131,7 +131,7 @@ public class EloRatingSystem<Player>
     
     public void addPlayer(Player player, double rating)
     {
-        int insertionIndex = Collections.binarySearch(this.ratings, defaultRating);
+        int insertionIndex = Collections.binarySearch(this.ratings, rating);
         if (insertionIndex < 0)
         {
             insertionIndex = -1 * insertionIndex - 1;
