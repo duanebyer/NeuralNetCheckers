@@ -85,7 +85,7 @@ public class EloRatingSystem<Player>
         {
             bestMatch = this.players.get(1);
         }
-        else if (index == this.players.size())
+        else if (index == this.players.size() - 1)
         {
             bestMatch = this.players.get(this.players.size());
         }
