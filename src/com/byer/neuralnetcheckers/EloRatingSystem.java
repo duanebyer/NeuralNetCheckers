@@ -131,7 +131,7 @@ public class EloRatingSystem<Player>
     
     public void addPlayer(Player player, double rating)
     {
-        int insertionIndex = Arrays.binarySearch(this.ratings.toArray(), defaultRating);
+        int insertionIndex = Collections.binarySearch(this.ratings, defaultRating);
         if (insertionIndex < 0)
         {
             insertionIndex = -1 * insertionIndex - 1;
