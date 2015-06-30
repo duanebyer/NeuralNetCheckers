@@ -37,12 +37,15 @@ public class EvolutionSystem {
                 Game.Status status = game.takeNextTurn();
                 if (status == Game.Status.WhiteWin) {
                     this.ratingSystem.updateRating(netA, netB, EloRatingSystem.Result.PLAYER_1_WIN);
+                    break;
                 }
                 else if (status == Game.Status.BlackWin) {
                     this.ratingSystem.updateRating(netA, netB, EloRatingSystem.Result.PLAYER_2_WIN);
+                    break;
                 }
                 else if (status == Game.Status.Tie) {
                     this.ratingSystem.updateRating(netA, netB, EloRatingSystem.Result.TIE);
+                    break;
                 }
             }
             
