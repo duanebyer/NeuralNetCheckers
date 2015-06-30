@@ -77,7 +77,7 @@ public class EloRatingSystem<Player>
     {
         if (this.players.size() <= 1)
         {
-            throw new RuntimeException("The EloRatingSystem must contain 1 or more players to return a match!");
+            throw new RuntimeException("The EloRatingSystem must contain 2 or more players to return a match!");
         }
         Player bestMatch;
         int index = this.players.indexOf(player);
