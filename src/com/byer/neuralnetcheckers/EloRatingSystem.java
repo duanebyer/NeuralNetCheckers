@@ -1,6 +1,7 @@
 package com.byer.neuralnetcheckers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -78,12 +79,43 @@ public class EloRatingSystem<Player>
     
     public Player getBestMatch(Player player)
     {
-        return null;
+        if (this.players.size() <= 1)
+        {
+            throw new RuntimeException("The EloRatingSystem must contain 1 or more players to return a match!");
+        }
+        Player bestMatch;
+        int index = this.players.indexOf(player);
+        if (index == 0)
+        {
+            bestMatch = this.players.get(1);
+        }
+        else if (index == this.players.size())
+        {
+            bestMatch = this.players.get(this.players.size());
+        }
+        else
+        {
+            double thisRating = this.ratings.get(index);
+            double aboveRating = this.ratings.get(index + 1);
+            double belowRating = this.ratings.get(index - 1);
+            double diffAbove = Math.abs(thisRating - aboveRating);
+            double diffBelow = Math.abs(thisRating - belowRating);
+            if (diffAbove < diffBelow)
+            {
+                bestMatch = this.players.get(index + 1);
+            }
+            else
+            {
+                bestMatch = this.players.get(index - 1);
+            }
+        }
+        return bestMatch;
     }
     
     public void updatePlayer(Player player, Double newScore)
     {
-        
+        this.removePlayer(player);
+        this.addPlayer(player, newScore);
     }
     
     public double getAverageRating()
@@ -93,22 +125,30 @@ public class EloRatingSystem<Player>
         {
             sum += rating;
         }
-        
+        return sum / this.ratings.size();
     }
     
     public void addPlayer(Player player)
     {
-        this.map.put(player, defaultRating);
+        this.addPlayer(player, defaultRating);
     }
     
     public void addPlayer(Player player, double rating)
     {
-        this.map.put(player, rating);
+        int insertionIndex = Arrays.binarySearch(this.ratings.toArray(), defaultRating);
+        if (insertionIndex < 0)
+        {
+            insertionIndex = -1 * insertionIndex - 1;
+        }
+        this.ratings.add(insertionIndex, this.defaultRating);
+        this.players.add(insertionIndex, player);
     }
     
     public void removePlayer(Player player)
     {
-        this.map.remove(player);
+        int removalIndex = players.indexOf(player);
+        players.remove(removalIndex);
+        ratings.remove(removalIndex);
     }
     
     private static double transformedRating(double rating)
