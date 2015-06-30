@@ -17,11 +17,7 @@ public class EvolutionSystem {
         this.weightMutationRate = weightMutationRate;
         this.biasMutationRate = biasMutationRate;
         this.cullRate = cullRate;
-        
-        for (NeuralNet net : population) {
-            this.ratingSystem.addPlayer(net);
-        }
-        
+        this.ratingSystem = new EloRatingSystem(population);
     }
     
     public double runGeneration() {
