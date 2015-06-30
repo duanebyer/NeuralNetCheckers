@@ -23,7 +23,7 @@ public class Main {
         System.out.println("Enter the file name of the neural net population:");
         String fileName = scanner.nextLine();
         NeuralNet[] nets;
-        if (fileName == "new") {
+        if (fileName.equals("new")) {
             nets = new NeuralNet[100];
             for (int i = 0; i < nets.length; ++i) {
                 nets[i] = new NeuralNet(NeuralNetPlayer.NUM_INPUTS, 1, 10, 100, true, Main.ACTIVATION_FUNCTION);
