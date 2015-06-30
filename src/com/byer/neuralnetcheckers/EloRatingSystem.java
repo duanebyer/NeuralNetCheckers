@@ -62,7 +62,7 @@ public class EloRatingSystem<Player>
         this.updatePlayer(player2, newRating2);
     }
     
-    public List<Player> getBestToWorst()
+    public List<Player> getWorstToBest()
     {
         return Collections.unmodifiableList(this.players);
     }
