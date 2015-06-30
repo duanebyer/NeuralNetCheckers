@@ -69,7 +69,7 @@ public class EvolutionSystem {
             for (int i = 0; i < nets.size() - numCulled; ++i) {
                 NeuralNet nextNet = nets.get(i).copy();
                 nextNet.mutate(this.weightMutationRate, this.biasMutationRate);
-                this.ratingSystem.addPlayer(nextNet);
+                this.ratingSystem.addPlayer(nextNet, this.ratingSystem.getRating(nets.get(i)));
             }
         }
         return this.ratingSystem.getAverageRating();

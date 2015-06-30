@@ -41,7 +41,7 @@ public class Main {
             System.out.println("Average ELO: " + system.runGeneration());
             NeuralNet[] theNets = new NeuralNet[system.getIndividuals().size()];
             theNets = system.getIndividuals().toArray(theNets);
-            NeuralNet.saveToFile("generation" + generation + ".nn", theNets);
+            //NeuralNet.saveToFile("generation" + generation + ".nn", theNets);
             generation += 1;
         }
         
