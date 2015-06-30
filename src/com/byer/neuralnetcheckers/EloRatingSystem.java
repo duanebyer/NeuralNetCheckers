@@ -136,7 +136,7 @@ public class EloRatingSystem<Player>
         {
             insertionIndex = -1 * insertionIndex - 1;
         }
-        this.ratings.add(insertionIndex, this.defaultRating);
+        this.ratings.add(insertionIndex, rating);
         this.players.add(insertionIndex, player);
     }
     
