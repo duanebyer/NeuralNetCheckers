@@ -1,5 +1,6 @@
 package com.byer.neuralnetcheckers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -166,7 +167,7 @@ public class EloRatingSystem<Player>
     }
     
     private final double k = 32;
-    private List<Player> players;
-    private List<Double> ratings;
+    private List<Player> players = new ArrayList<Player>();
+    private List<Double> ratings = new ArrayList<Double>();
     private double defaultRating = 0;
 }
