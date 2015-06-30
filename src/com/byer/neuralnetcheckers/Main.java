@@ -33,7 +33,7 @@ public class Main {
         else {
             nets = NeuralNet.loadFromFile(fileName, ACTIVATION_FUNCTION);
         }
-        EvolutionSystem system = new EvolutionSystem(Arrays.asList(nets), nets.length * 2, 0.2, 0.05, 0.05);
+        EvolutionSystem system = new EvolutionSystem(Arrays.asList(nets), nets.length * 2, 0.4, 0.05, 0.05);
         
         int generation = 1;
         while (true) {

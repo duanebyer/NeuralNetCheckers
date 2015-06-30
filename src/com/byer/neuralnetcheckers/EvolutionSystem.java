@@ -53,7 +53,7 @@ public class EvolutionSystem {
         
         // Generate the next generation by removing underperforming individuals
         // and allowing fit individuals to reproduce.
-        int numCulled = (int) cullRate * nets.size();
+        int numCulled = (int) (cullRate * nets.size());
         int numChildren = numCulled / (nets.size() - numCulled);
         for (int i = 0; i < numCulled; ++i) {
             this.ratingSystem.removePlayer(nets.get(i));

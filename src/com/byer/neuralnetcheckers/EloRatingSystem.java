@@ -64,7 +64,8 @@ public class EloRatingSystem<Player>
     
     public List<Player> getWorstToBest()
     {
-        return Collections.unmodifiableList(this.players);
+        ArrayList<Player> worstToBestCopy = new ArrayList<Player>(this.players);
+        return worstToBestCopy;
     }
     
     public double getRating(Player player)
