@@ -1,14 +1,9 @@
 package com.byer.neuralnetcheckers;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * 
@@ -21,8 +16,8 @@ public class EloRatingSystem<Player>
     {
         for (Player p : players)
         {
-            players.add(p);
-            ratings.add(this.defaultRating);
+            this.players.add(p);
+            this.ratings.add(this.defaultRating);
         }
     }
     
@@ -31,8 +26,8 @@ public class EloRatingSystem<Player>
         this.defaultRating = defaultRating;
         for (Player p : players)
         {
-            players.add(p);
-            ratings.add(this.defaultRating);
+            this.players.add(p);
+            this.ratings.add(this.defaultRating);
         }
     }
     
