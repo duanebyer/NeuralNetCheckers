@@ -34,7 +34,7 @@ public class NeuralNetPlayer extends Player {
     
     private static double[] translateBoard(Board board, boolean isWhite) {
         // 5 neurons for each board position, and 2 extra for # of pieces left
-        double[] result = new double[5 * 32 + 3];
+        double[] result = new double[NUM_INPUTS];
         int boardPosition = 0;
         int friendlyPieces = 0;
         int enemyPieces = 0;
@@ -96,6 +96,8 @@ public class NeuralNetPlayer extends Player {
         result[5 * 32 + 2] = isWhite ? 1 : -1;
         return result;
     }
+    
+    public final static int NUM_INPUTS = 5 * 32 + 3;
     
     private final NeuralNet neuralNet;
     
