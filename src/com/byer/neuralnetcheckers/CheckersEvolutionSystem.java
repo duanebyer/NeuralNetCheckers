@@ -2,6 +2,8 @@ package com.byer.neuralnetcheckers;
 
 import com.asemahle.neuralnet.NeuralNet;
 import com.byer.checkers.Game;
+import com.byer.neuralnetcheckers.main.EvolveCheckersNet;
+
 import java.util.List;
 
 /**
@@ -27,7 +29,7 @@ public class CheckersEvolutionSystem extends EvolutionSystem<NeuralNet> {
         NeuralNetPlayer playerA = new NeuralNetPlayer(netA);
         NeuralNetPlayer playerB = new NeuralNetPlayer(netB);
 
-        Game game = new Game(playerA, playerB, Main.TURN_LIMIT);
+        Game game = new Game(playerA, playerB, EvolveCheckersNet.TURN_LIMIT);
         while (true) {
             Game.Status status = game.takeNextTurn();
             if (status == Game.Status.WhiteWin) {
