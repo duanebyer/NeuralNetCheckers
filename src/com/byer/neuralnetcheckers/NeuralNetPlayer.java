@@ -87,8 +87,8 @@ public class NeuralNetPlayer extends Player {
                             friendlyPieces += 1;
                         }
                     }
+                    boardPosition += 1;
                 }
-                boardPosition += 1;
             }
         }
         result[5 * 32] = friendlyPieces;
