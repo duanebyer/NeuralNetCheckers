@@ -167,7 +167,7 @@ public class EloRatingSystem<Player>
         TIE
     }
     
-    private final double k = 32;
+    private final double k = 16;
     private List<Player> players = new ArrayList<Player>();
     private List<Double> ratings = new ArrayList<Double>();
     private double defaultRating = 0;

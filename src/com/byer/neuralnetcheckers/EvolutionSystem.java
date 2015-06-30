@@ -11,7 +11,12 @@ import java.util.Random;
  */
 public class EvolutionSystem {
     
-    public EvolutionSystem(List<NeuralNet> population, int matchesPerGeneration, double cullRate, double weightMutationRate, double biasMutationRate) {
+    public EvolutionSystem(
+            List<NeuralNet> population, 
+            int matchesPerGeneration, 
+            double cullRate, 
+            double weightMutationRate, 
+            double biasMutationRate) {
         
         this.matchesPerGeneration = matchesPerGeneration;
         this.weightMutationRate = weightMutationRate;
