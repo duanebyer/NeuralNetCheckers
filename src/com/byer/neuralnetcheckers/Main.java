@@ -27,6 +27,7 @@ public class Main {
             nets = new NeuralNet[100];
             for (int i = 0; i < nets.length; ++i) {
                 nets[i] = new NeuralNet(NeuralNetPlayer.NUM_INPUTS, 1, 10, 100, true, Main.ACTIVATION_FUNCTION);
+                nets[i].initConnectionWeights(0.0, 0.5, 0.0, 0.5);
             }
         }
         else {
@@ -41,6 +42,7 @@ public class Main {
             NeuralNet[] theNets = new NeuralNet[system.getIndividuals().size()];
             theNets = system.getIndividuals().toArray(theNets);
             NeuralNet.saveToFile("generation" + generation + ".nn", theNets);
+            generation += 1;
         }
         
     }
