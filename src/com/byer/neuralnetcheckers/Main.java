@@ -12,7 +12,7 @@ import java.util.Scanner;
  */
 public class Main {
     
-    public static final ActivationFunction ACTIVATION_FUNCTION = (double x) -> x;
+    public static final ActivationFunction ACTIVATION_FUNCTION = (double x) -> x / Math.sqrt(1 + x * x);
     public static final int TURN_LIMIT = 20;
     
     /**
