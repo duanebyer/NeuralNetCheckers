@@ -28,7 +28,7 @@ public class CheckersEvolutionSystem extends EvolutionSystem<NeuralNet> {
         // Run the game between the two players.
         NeuralNetPlayer playerA = new NeuralNetPlayer(netA);
         NeuralNetPlayer playerB = new NeuralNetPlayer(netB);
-
+        
         Game game = new Game(playerA, playerB, EvolveCheckersNet.TURN_LIMIT);
         while (true) {
             Game.Status status = game.takeNextTurn();

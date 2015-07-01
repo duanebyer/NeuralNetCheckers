@@ -36,7 +36,7 @@ public class EvolveCheckersNet {
         else {
             nets = NeuralNet.loadFromFile(fileName, ACTIVATION_FUNCTION);
         }
-        CheckersEvolutionSystem system = new CheckersEvolutionSystem(Arrays.asList(nets), nets.length * 2, 0.4, 0.05, 0.05);
+        CheckersEvolutionSystem system = new CheckersEvolutionSystem(Arrays.asList(nets), nets.length * 10, 0.4, 0.0005, 0.0005);
         
         int generation = 1;
         while (true) {

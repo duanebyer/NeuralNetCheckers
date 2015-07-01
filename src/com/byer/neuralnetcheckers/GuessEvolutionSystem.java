@@ -40,7 +40,12 @@ public class GuessEvolutionSystem extends EvolutionSystem<NeuralNet> {
         return next;
     }
     
-    private final double weightMutationRate;
-    private final double biasMutationRate;
+    public void updateMutationRates(double factor) {
+        this.biasMutationRate *= factor;
+        this.weightMutationRate *= factor;
+    }
+    
+    public double weightMutationRate;
+    public double biasMutationRate;
     
 }

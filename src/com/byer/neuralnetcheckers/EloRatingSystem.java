@@ -148,6 +148,14 @@ public class EloRatingSystem<Player>
         ratings.remove(removalIndex);
     }
     
+    public void resetAllRatings()
+    {
+        for (int i = 0; i < this.ratings.size(); i++)
+        {
+            this.ratings.set(i, 0.0);
+        }
+    }
+    
     private static double transformedRating(double rating)
     {
         double transformedRating = Math.pow(10, rating/400);

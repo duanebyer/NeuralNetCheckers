@@ -11,26 +11,47 @@ public abstract class EvolutionSystem<Individual> {
     
     public EvolutionSystem(
             List<Individual> population, 
-            int matchesPerGeneration, 
+            int matchesPerGeneration,
             double cullRate) {
-        
+        this.matchType = MatchType.RANDOM;
         this.matchesPerGeneration = matchesPerGeneration;
+        this.cullRate = cullRate;
+        this.ratingSystem = new EloRatingSystem(population);
+    }
+    
+    public EvolutionSystem(
+            List<Individual> population, 
+            double cullRate) {
+        this.matchType = MatchType.ALL;
+        this.matchesPerGeneration = 0;
         this.cullRate = cullRate;
         this.ratingSystem = new EloRatingSystem(population);
     }
     
     public double runGeneration() {
         
+        this.ratingSystem.resetAllRatings();
         List<Individual> nets = this.getIndividuals();
         
-        for (int i = 0; i < this.matchesPerGeneration; ++i) {
-            Individual netA = nets.get(this.random.nextInt(nets.size()));
-            Individual netB = this.ratingSystem.getBestMatch(netA);
-            
-            EloRatingSystem.Result result = this.playGame(netA, netB);
-            
-            this.ratingSystem.updateRating(netA, netB, result);
-            
+        if (this.matchType == MatchType.RANDOM) {
+            for (int i = 0; i < this.matchesPerGeneration; ++i) {
+                Individual netA = nets.get(this.random.nextInt(nets.size()));
+                Individual netB = this.ratingSystem.getBestMatch(netA);
+                
+                EloRatingSystem.Result result = this.playGame(netA, netB);
+                
+                this.ratingSystem.updateRating(netA, netB, result);
+                
+            }
+        } else {
+            for (Individual netA : nets) {
+                for (Individual netB : nets) {
+                    if (netA != netB) {
+                        EloRatingSystem.Result result = this.playGame(netA, netB);
+                        this.ratingSystem.updateRating(netA, netB, result);
+                    }
+                }
+            }
         }
         
         // Generate the next generation by removing underperforming individuals
@@ -63,6 +84,12 @@ public abstract class EvolutionSystem<Individual> {
     public abstract EloRatingSystem.Result playGame(Individual netA, Individual netB);
     public abstract Individual makeChild(Individual parent);
     
+    public enum MatchType {
+        RANDOM,
+        ALL
+    };
+    
+    private final MatchType matchType;
     private final Random random = new Random();
     private final int matchesPerGeneration;
     private final double cullRate;
