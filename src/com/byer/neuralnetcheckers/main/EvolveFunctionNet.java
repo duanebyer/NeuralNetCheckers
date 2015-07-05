@@ -11,11 +11,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import com.asemahle.neuralnet.ActivationFunction;
 import com.asemahle.neuralnet.NeuralNet;
 import com.byer.neuralnetcheckers.Function;
 import com.byer.neuralnetcheckers.FunctionEvolutionSystem;
 
 public class EvolveFunctionNet {
+    
+    public static final ActivationFunction AF = (double x) -> Math.sin(x);
     
     public static void main(String[] args) {
         JFrame frame = new JFrame("Graphs");
@@ -27,17 +30,17 @@ public class EvolveFunctionNet {
         
         NeuralNet[] nets = new NeuralNet[20];
         for (int i = 0; i < nets.length; ++i) {
-            nets[i] = new NeuralNet(1, 2, 10, 20, true, EvolveCheckersNet.ACTIVATION_FUNCTION);
-            nets[i].initConnectionWeights(0.0, 0.5, 0.0, 0.5);
+            nets[i] = new NeuralNet(1, 2, 3, 5, true, AF);
+            nets[i].initConnectionWeights(0.0, 1, 0.0, 1);
         }
         
         Function[] functions = {
-                (double x) -> Math.sin(x)
-                //(double x) -> Math.cos(x)
+                (double x) -> Math.sin(x),
+                (double x) -> Math.cos(x)
         };
         double[] domain = {-Math.PI, Math.PI};
-        double[] range = {-1.2, 1.2};
-        FunctionEvolutionSystem system = new FunctionEvolutionSystem(Arrays.asList(nets), 0.4, 0.001, 0.001, 100, domain, functions);
+        double[] range = {-1, 1};
+        FunctionEvolutionSystem system = new FunctionEvolutionSystem(Arrays.asList(nets), 0.1, 0.005, 0.005, 100, domain, functions);
         
         int generation = 1;
         NeuralNet winner = null;
@@ -52,22 +55,23 @@ public class EvolveFunctionNet {
         }
     }
     
-    public static ImageIcon draw(NeuralNet winner, Function[] functions, double[]domain, double[]range){
+    public static ImageIcon draw(NeuralNet winner, Function[] functions, double[] domain, double[] range){
         int size = 500;
         BufferedImage image = new BufferedImage(size * functions.length, size, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = image.createGraphics();
+        g2.setColor(Color.WHITE);
+        g2.fillRect(0, 0, image.getWidth(), image.getHeight());
         g2.setColor(Color.BLACK);
         double spreadx = Math.abs(domain[0] - domain[1]);
-        double offsetx = (domain[0] + domain[1]) / 2.0;
         double spready = Math.abs(range[0] - range[1]);
         
         double drawx = 0;
         for (int f = 0; f < functions.length; f++){
             for (int i = 0; i < size; i++){
-                double x = (spreadx / size) * i + offsetx;
+                double x = domain[0] + (i * spreadx / size);
                 double y = functions[f].call(x);
                 double drawy = ( (y / spready)+0.5) * size; 
-                g2.setColor(Color.GREEN); //ideal
+                g2.setColor(Color.BLUE); //ideal
                 g2.drawLine(
                         (int) Math.round(drawx), 
                         (int) Math.round(drawy), 

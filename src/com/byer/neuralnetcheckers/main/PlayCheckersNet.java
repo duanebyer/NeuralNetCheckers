@@ -5,6 +5,7 @@ import com.byer.checkers.Game;
 import com.byer.checkers.HumanPlayer;
 import com.byer.neuralnetcheckers.NeuralNetPlayer;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
@@ -14,7 +15,7 @@ import java.util.Scanner;
  */
 public class PlayCheckersNet {
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the file name of the neural net you want to play:");
         String fileName = scanner.nextLine();

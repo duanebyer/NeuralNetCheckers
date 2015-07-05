@@ -22,6 +22,7 @@ public class FunctionEvolutionSystem extends EvolutionSystem<NeuralNet>{
         this.functions = functions;
         this.numGames = numGames;
         
+        this.domain = domain;
         this.spread = Math.abs(domain[0] - domain[1]);
         this.offset = (domain[0] + domain[1]) / 2.0;
     }
@@ -30,13 +31,14 @@ public class FunctionEvolutionSystem extends EvolutionSystem<NeuralNet>{
     public EloRatingSystem.Result playGame(NeuralNet netA, NeuralNet netB) {
         double diffA = 0;
         double diffB = 0;
-        for (int games = 0; games < this.numGames; games ++) {
-            double[] input = {this.random.nextDouble() * this.spread + this.offset - this.spread / 2.0};
+        for (int i = 0; i < this.numGames; i ++) {
+            double[] input = {domain[0] + (i * spread / this.numGames)};
+            //double[] input = {this.random.nextDouble() * this.spread + this.offset - this.spread / 2.0};
             double[] resultA = netA.input(input);
             double[] resultB = netB.input(input);
-            for (int i = 0; i < netA.getNumOutputs(); i++){
-                diffA += Math.pow((resultA[i] - functions[i].call(input[0])),2);
-                diffB += Math.pow((resultB[i] - functions[i].call(input[0])),2);
+            for (int j = 0; j < netA.getNumOutputs(); j++){
+                diffA += Math.pow((resultA[j] - functions[j].call(input[0])),2);
+                diffB += Math.pow((resultB[j] - functions[j].call(input[0])),2);
             }
         }
         
@@ -62,6 +64,7 @@ public class FunctionEvolutionSystem extends EvolutionSystem<NeuralNet>{
     
     private Random random = new Random();
     private Function[] functions;
+    private double[] domain;
     private double offset;
     private double spread;
     private int numGames;
