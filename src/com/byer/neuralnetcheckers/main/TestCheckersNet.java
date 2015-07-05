@@ -25,7 +25,7 @@ public class TestCheckersNet {
         int netNumber = scanner.nextInt();
         int stupidBotWins = 0;
         int neuralBotWins = 0;
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10000; i++) {
             NeuralNetPlayer netPlayer = new NeuralNetPlayer(nets[netNumber]);
             Game game = new Game(new StupidCheckersPlayer(), netPlayer, EvolveCheckersNet.TURN_LIMIT);
             while (true) {
@@ -47,7 +47,7 @@ public class TestCheckersNet {
                 }
             }
         }
-        System.out.println(neuralBotWins + "   " + stupidBotWins);
+        System.out.println("Neural: " + neuralBotWins + "  |  Random: " + stupidBotWins + "  |  N/R = " + (double)neuralBotWins/(double)stupidBotWins);
     }
     
 }

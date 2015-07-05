@@ -28,19 +28,19 @@ public class EvolveFunctionNet {
         frame.pack();
         frame.setVisible(true);
         
-        NeuralNet[] nets = new NeuralNet[20];
+        NeuralNet[] nets = new NeuralNet[100];
         for (int i = 0; i < nets.length; ++i) {
-            nets[i] = new NeuralNet(1, 2, 3, 5, true, AF);
-            nets[i].initConnectionWeights(0.0, 1, 0.0, 1);
+            nets[i] = new NeuralNet(1, 1, 10, 32, true, EvolveCheckersNet.ACTIVATION_FUNCTION);
+            nets[i].initConnectionWeights(0.0, 0.5, 0.0, 0.3);
         }
         
         Function[] functions = {
-                (double x) -> Math.sin(x),
-                (double x) -> Math.cos(x)
+                (double x) -> Math.sin(x)
+                //(double x) -> Math.cos(x)
         };
-        double[] domain = {-Math.PI, Math.PI};
+        double[] domain = {-2*Math.PI, 2*Math.PI};
         double[] range = {-1, 1};
-        FunctionEvolutionSystem system = new FunctionEvolutionSystem(Arrays.asList(nets), 0.1, 0.005, 0.005, 100, domain, functions);
+        FunctionEvolutionSystem system = new FunctionEvolutionSystem(Arrays.asList(nets), 0.3, 0.0005, 0.0005, 100, domain, functions);
         
         int generation = 1;
         NeuralNet winner = null;

@@ -27,16 +27,16 @@ public class EvolveCheckersNet {
         String fileName = scanner.nextLine();
         NeuralNet[] nets;
         if (fileName.equals("new")) {
-            nets = new NeuralNet[100];
+            nets = new NeuralNet[25];
             for (int i = 0; i < nets.length; ++i) {
-                nets[i] = new NeuralNet(NeuralNetPlayer.NUM_INPUTS, 1, 10, 100, true, EvolveCheckersNet.ACTIVATION_FUNCTION);
-                nets[i].initConnectionWeights(0.0, 0.5, 0.0, 0.5);
+                nets[i] = new NeuralNet(NeuralNetPlayer.NUM_INPUTS, 1, 5, 34, true, EvolveCheckersNet.ACTIVATION_FUNCTION);
+                nets[i].initConnectionWeights(0.0, 0.6, 0.0, 0.3);
             }
         }
         else {
             nets = NeuralNet.loadFromFile(fileName, ACTIVATION_FUNCTION);
         }
-        CheckersEvolutionSystem system = new CheckersEvolutionSystem(Arrays.asList(nets), nets.length * 10, 0.4, 0.0005, 0.0005);
+        CheckersEvolutionSystem system = new CheckersEvolutionSystem(Arrays.asList(nets), 0.4, 0.0005, 0.0005);
         
         int generation = 1;
         while (true) {
@@ -44,7 +44,9 @@ public class EvolveCheckersNet {
             System.out.println("Average ELO: " + system.runGeneration());
             NeuralNet[] theNets = new NeuralNet[system.getIndividuals().size()];
             theNets = system.getIndividuals().toArray(theNets);
-            NeuralNet.saveToFile("generation" + generation + ".nn", new NeuralNet[] { theNets[theNets.length - 1] });
+            if (generation % 10 == 0 || generation == 1){
+                NeuralNet.saveToFile("generation" + generation + ".nn", new NeuralNet[] { theNets[theNets.length - 1] });
+            }
             generation += 1;
         }
         

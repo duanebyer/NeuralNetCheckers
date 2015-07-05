@@ -23,6 +23,16 @@ public class CheckersEvolutionSystem extends EvolutionSystem<NeuralNet> {
         this.biasMutationRate = biasMutationRate;
     }
     
+    public CheckersEvolutionSystem(
+            List<NeuralNet> population,
+            double cullRate,
+            double weightMutationRate,
+            double biasMutationRate) {
+        super(population, cullRate);
+        this.weightMutationRate = weightMutationRate;
+        this.biasMutationRate = biasMutationRate;
+    }
+    
     @Override
     public EloRatingSystem.Result playGame(NeuralNet netA, NeuralNet netB) {
         // Run the game between the two players.
