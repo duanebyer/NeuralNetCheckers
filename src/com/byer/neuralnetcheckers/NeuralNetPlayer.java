@@ -32,7 +32,7 @@ public class NeuralNetPlayer extends Player {
         return bestMove;
     }
     
-    private static double[] translateBoard(Board board, boolean isWhite) {
+    public static double[] translateBoard(Board board, boolean isWhite) {
         // 5 neurons for each board position, and 2 extra for # of pieces left
         double[] result = new double[NUM_INPUTS];
         int boardPosition = 0;

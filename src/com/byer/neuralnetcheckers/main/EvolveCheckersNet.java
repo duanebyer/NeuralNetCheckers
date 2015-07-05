@@ -44,7 +44,7 @@ public class EvolveCheckersNet {
             System.out.println("Average ELO: " + system.runGeneration());
             NeuralNet[] theNets = new NeuralNet[system.getIndividuals().size()];
             theNets = system.getIndividuals().toArray(theNets);
-            if (generation % 10 == 0 || generation == 1){
+            if (/*generation % 10 == 0 || generation == 1*/true){
                 NeuralNet.saveToFile("generation" + generation + ".nn", new NeuralNet[] { theNets[theNets.length - 1] });
             }
             generation += 1;
