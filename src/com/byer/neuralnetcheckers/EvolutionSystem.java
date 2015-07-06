@@ -53,6 +53,7 @@ public abstract class EvolutionSystem<Individual> {
                 }
             }
         }
+        double highestElo = this.ratingSystem.getHighestElo();
         
         // Generate the next generation by removing underperforming individuals
         // and allowing fit individuals to reproduce.
@@ -74,7 +75,7 @@ public abstract class EvolutionSystem<Individual> {
                 this.ratingSystem.addPlayer(nextNet, this.ratingSystem.getRating(nets.get(i)));
             }
         }
-        return this.ratingSystem.getHighestElo();
+        return highestElo;
     }
     
     public List<Individual> getIndividuals() {
