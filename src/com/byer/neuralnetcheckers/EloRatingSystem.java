@@ -115,14 +115,9 @@ public class EloRatingSystem<Player>
         this.addPlayer(player, newScore);
     }
     
-    public double getAverageRating()
+    public double getHighestElo()
     {
-        double sum = 0;
-        for (double rating : this.ratings)
-        {
-            sum += rating;
-        }
-        return sum / this.ratings.size();
+        return this.ratings.get(this.ratings.size() - 1);
     }
     
     public void addPlayer(Player player)
