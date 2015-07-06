@@ -43,13 +43,13 @@ public abstract class EvolutionSystem<Individual> {
                 this.ratingSystem.updateRating(netA, netB, result);
                 
             }
-        } else {
-            for (Individual netA : nets) {
-                for (Individual netB : nets) {
-                    if (netA != netB) {
-                        EloRatingSystem.Result result = this.playGame(netA, netB);
-                        this.ratingSystem.updateRating(netA, netB, result);
-                    }
+        } else {            
+            for (int a = 0; a < nets.size() - 1; a++) {
+                for (int b = a+1; b < nets.size(); b++) {
+                    Individual netA = nets.get(a);
+                    Individual netB = nets.get(b);
+                    EloRatingSystem.Result result = this.playGame(netA, netB);
+                    this.ratingSystem.updateRating(netA, netB, result);
                 }
             }
         }
@@ -74,7 +74,7 @@ public abstract class EvolutionSystem<Individual> {
                 this.ratingSystem.addPlayer(nextNet, this.ratingSystem.getRating(nets.get(i)));
             }
         }
-        return this.ratingSystem.getAverageRating();
+        return this.ratingSystem.getHighestElo();
     }
     
     public List<Individual> getIndividuals() {

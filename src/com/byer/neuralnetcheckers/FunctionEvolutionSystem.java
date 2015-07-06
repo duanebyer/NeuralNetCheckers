@@ -12,12 +12,14 @@ public class FunctionEvolutionSystem extends EvolutionSystem<NeuralNet>{
             double cullRate,
             double weightMutationRate,
             double biasMutationRate,
+            double outputMutationRate,
             int numGames,
             double[] domain,
             Function[] functions) {
         super(population, cullRate);
         this.weightMutationRate = weightMutationRate;
         this.biasMutationRate = biasMutationRate;
+        this.outputMutationRate = outputMutationRate;
         
         this.functions = functions;
         this.numGames = numGames;
@@ -53,7 +55,7 @@ public class FunctionEvolutionSystem extends EvolutionSystem<NeuralNet>{
     @Override
     public NeuralNet makeChild(NeuralNet parent) {
         NeuralNet next = parent.copy();
-        next.mutate(this.weightMutationRate, this.biasMutationRate);
+        next.mutate(this.weightMutationRate, this.biasMutationRate, this.outputMutationRate);
         return next;
     }
     
@@ -70,4 +72,5 @@ public class FunctionEvolutionSystem extends EvolutionSystem<NeuralNet>{
     private int numGames;
     public double weightMutationRate;
     public double biasMutationRate;
+    public double outputMutationRate;
 }

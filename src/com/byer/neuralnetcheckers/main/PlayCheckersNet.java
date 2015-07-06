@@ -26,11 +26,11 @@ public class PlayCheckersNet {
             game.getBoard().print(new PrintWriter(System.out));
             Game.Status result = game.takeNextTurn();
             if (result == Game.Status.BlackWin) {
-                System.out.println("Player 1 wins!");
+                System.out.println("Player 2 wins!");
                 break;
             }
             if (result == Game.Status.WhiteWin) {
-                System.out.println("Player 2 wins!");
+                System.out.println("Player 1 wins!");
                 break;
             }
             if (result == Game.Status.Tie) {

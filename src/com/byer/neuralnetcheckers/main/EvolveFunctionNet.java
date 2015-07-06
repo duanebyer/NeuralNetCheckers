@@ -28,19 +28,20 @@ public class EvolveFunctionNet {
         frame.pack();
         frame.setVisible(true);
         
-        NeuralNet[] nets = new NeuralNet[100];
+        NeuralNet[] nets = new NeuralNet[20];
         for (int i = 0; i < nets.length; ++i) {
-            nets[i] = new NeuralNet(1, 1, 10, 32, true, EvolveCheckersNet.ACTIVATION_FUNCTION);
-            nets[i].initConnectionWeights(0.0, 0.5, 0.0, 0.3);
+            nets[i] = new NeuralNet(1, 3, 5, 10, true, EvolveCheckersNet.ACTIVATION_FUNCTION);
+            nets[i].initConnectionWeights(0.0, 0.5, 0.0, 0.3, 1, 0.2);
         }
         
         Function[] functions = {
-                (double x) -> Math.sin(x)
-                //(double x) -> Math.cos(x)
+                (double x) -> Math.sin(x),
+                (double x) -> Math.cos(x),
+                (double x) -> Math.abs(x)
         };
-        double[] domain = {-2*Math.PI, 2*Math.PI};
-        double[] range = {-1, 1};
-        FunctionEvolutionSystem system = new FunctionEvolutionSystem(Arrays.asList(nets), 0.3, 0.0005, 0.0005, 100, domain, functions);
+        double[] domain = {-Math.PI, Math.PI};
+        double[] range = {-1, Math.PI};
+        FunctionEvolutionSystem system = new FunctionEvolutionSystem(Arrays.asList(nets), 0.3, 0.01, 0.01, 0.1, 100, domain, functions);
         
         int generation = 1;
         NeuralNet winner = null;
@@ -69,7 +70,7 @@ public class EvolveFunctionNet {
         for (int f = 0; f < functions.length; f++){
             for (int i = 0; i < size; i++){
                 double x = domain[0] + (i * spreadx / size);
-                double y = functions[f].call(x);
+                double y = -1 * functions[f].call(x);
                 double drawy = ( (y / spready)+0.5) * size; 
                 g2.setColor(Color.BLUE); //ideal
                 g2.drawLine(
@@ -79,7 +80,7 @@ public class EvolveFunctionNet {
                         (int) Math.round(drawy));
                 
                 g2.setColor(Color.BLACK); //neural net
-                y = winner.input(new double[] {x})[f];
+                y = -1 * winner.input(new double[] {x})[f];
                 drawy = ( (y / spready)+0.5) * size;
                 g2.drawLine(
                         (int) Math.round(drawx), 

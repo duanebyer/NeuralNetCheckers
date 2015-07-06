@@ -27,21 +27,21 @@ public class EvolveCheckersNet {
         String fileName = scanner.nextLine();
         NeuralNet[] nets;
         if (fileName.equals("new")) {
-            nets = new NeuralNet[25];
+            nets = new NeuralNet[100];
             for (int i = 0; i < nets.length; ++i) {
-                nets[i] = new NeuralNet(NeuralNetPlayer.NUM_INPUTS, 1, 5, 34, true, EvolveCheckersNet.ACTIVATION_FUNCTION);
+                nets[i] = new NeuralNet(NeuralNetPlayer.NUM_INPUTS, 1, 2, 100, true, EvolveCheckersNet.ACTIVATION_FUNCTION);
                 nets[i].initConnectionWeights(0.0, 0.6, 0.0, 0.3);
             }
         }
         else {
             nets = NeuralNet.loadFromFile(fileName, ACTIVATION_FUNCTION);
         }
-        CheckersEvolutionSystem system = new CheckersEvolutionSystem(Arrays.asList(nets), 0.4, 0.0005, 0.0005);
+        CheckersEvolutionSystem system = new CheckersEvolutionSystem(Arrays.asList(nets), 0.4, 0.001, 0.001);
         
         int generation = 1;
         while (true) {
             System.out.println("Generation " + generation + ": ");
-            System.out.println("Average ELO: " + system.runGeneration());
+            System.out.println("Highest ELO: " + system.runGeneration());
             NeuralNet[] theNets = new NeuralNet[system.getIndividuals().size()];
             theNets = system.getIndividuals().toArray(theNets);
             if (/*generation % 10 == 0 || generation == 1*/true){

@@ -39,18 +39,45 @@ public class CheckersEvolutionSystem extends EvolutionSystem<NeuralNet> {
         NeuralNetPlayer playerA = new NeuralNetPlayer(netA);
         NeuralNetPlayer playerB = new NeuralNetPlayer(netB);
         
+        int netAScore = 0;
         Game game = new Game(playerA, playerB, EvolveCheckersNet.TURN_LIMIT);
         while (true) {
             Game.Status status = game.takeNextTurn();
             if (status == Game.Status.WhiteWin) {
-                return EloRatingSystem.Result.PLAYER_1_WIN;
+                netAScore ++;
+                break;
             }
             else if (status == Game.Status.BlackWin) {
-                return EloRatingSystem.Result.PLAYER_2_WIN;
+                netAScore --;
+                break;
             }
             else if (status == Game.Status.Tie) {
-                return EloRatingSystem.Result.TIE;
+                break;
             }
+        }
+        
+        game = new Game(playerB, playerA, EvolveCheckersNet.TURN_LIMIT);
+        while (true) {
+            Game.Status status = game.takeNextTurn();
+            if (status == Game.Status.WhiteWin) {
+                netAScore --;
+                break;
+            }
+            else if (status == Game.Status.BlackWin) {
+                netAScore ++;
+                break;
+            }
+            else if (status == Game.Status.Tie) {
+                break;
+            }
+        }
+        
+        if (netAScore > 0) {
+            return EloRatingSystem.Result.PLAYER_1_WIN;
+        } else if(netAScore < 0) {
+            return EloRatingSystem.Result.PLAYER_2_WIN;
+        } else {
+            return EloRatingSystem.Result.TIE;
         }
     }
 
