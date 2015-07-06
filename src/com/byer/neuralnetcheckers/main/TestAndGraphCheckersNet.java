@@ -12,8 +12,15 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -30,6 +37,8 @@ public class TestAndGraphCheckersNet {
     
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the filename (for saving the collected data):");
+        String filename = scanner.nextLine();
         System.out.println("Enter the number of the first generation to be tested:");
         int startGen = scanner.nextInt();
         System.out.println("Enter the number of the final generation to be tested:");
@@ -38,6 +47,7 @@ public class TestAndGraphCheckersNet {
         int increment = scanner.nextInt();
         System.out.println("Enter the number of games each generation winner should play against the stupidBot:");
         int numGames = scanner.nextInt();
+        scanner.close();
         
         JFrame frame = new JFrame("Graphs");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,7 +65,9 @@ public class TestAndGraphCheckersNet {
                 try {
                     nets = NeuralNet.loadFromFile(fileName, EvolveCheckersNet.ACTIVATION_FUNCTION);
                     break;
-                } catch(IOException e) {/*Wait for the file to be created*/}
+                } catch(IOException e) {/*Wait for the file to be created*/
+                } catch(IndexOutOfBoundsException e) {/*This error happens sometimes but it's okay*/
+                }
             }
             int netNumber = 0;
             int stupidBotWins = 0;
@@ -88,8 +100,26 @@ public class TestAndGraphCheckersNet {
                     "  |  N/R = " + (double)neuralBotWins/(double)stupidBotWins);
             winsVSLosses.add((double)neuralBotWins/(double)stupidBotWins);       
             lbl.setIcon(draw(winsVSLosses, lbl.getWidth(), lbl.getHeight()));
+            outputToFile(filename, winsVSLosses);
         }
         System.out.println("DONE!");
+    }
+    
+    public static void outputToFile(String filename, List<Double> winsVSLosses) 
+            throws UnsupportedEncodingException, FileNotFoundException, IOException {
+        //output winsVSLosses to file
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("filename.txt"), "utf-8"))) {
+            writer.write("POPULATION_SIZE = " + EvolveCheckersNet.POPULATION_SIZE);
+            writer.write("NUM_HIDDEN_LAYERS = " + EvolveCheckersNet.NUM_HIDDEN_LAYERS);
+            writer.write("NEURON_PER_LAYER = " + EvolveCheckersNet.NEURONS_PER_LAYER);
+            writer.write("CULL_RATE = " + EvolveCheckersNet.CULL_RATE);
+            writer.write("WEIGHT_MUTATION_RATE = " + EvolveCheckersNet.WEIGHT_MUTATION_RATE);
+            writer.write("BIAS_MUTATION_RATE = " + EvolveCheckersNet.BIAS_MUTATION_RATE);
+            for (Double d : winsVSLosses) {
+                writer.write(d.toString());
+            }
+        }
     }
     
     public static ImageIcon draw(List<Double> points, int width, int height){
